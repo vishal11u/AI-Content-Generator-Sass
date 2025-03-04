@@ -27,7 +27,7 @@ function SideNav() {
           return (
             <div
               key={i}
-              className={`flex gap-2 mb-2 p-3 rounded-lg cursor-pointer 
+              className={`flex gap-2 mb-2 p-3 rounded-lg cursor-pointer  items-center
                 ${
                   isActive
                     ? "bg-indigo-600 text-white"
@@ -35,7 +35,7 @@ function SideNav() {
                 }`}
             >
               {list?.icon}
-              <h2>{list?.name}</h2>
+              <h2 className="text-lg">{list?.name}</h2>
             </div>
           );
         })}

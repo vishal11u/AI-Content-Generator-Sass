@@ -11,7 +11,7 @@ function HeaderNav() {
       </div>
 
       <div className="flex items-center gap-6">
-        <h2 className="bg-indigo-500 text-white rounded-full text-sm px-3 p-1 cursor-pointer shadow">
+        <h2 className="bg-indigo-500 text-white rounded-full text-sm px-3 p-1 cursor-pointer shadow hidden lg:block">
           🔥 Join Membership just for $9.99/month
         </h2>
 
