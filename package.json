@@ -11,7 +11,9 @@
   "dependencies": {
     "@clerk/elements": "^0.23.1",
     "@clerk/nextjs": "^6.12.2",
+    "@google/generative-ai": "^0.23.0",
     "@radix-ui/react-slot": "^1.1.2",
+    "@toast-ui/react-editor": "^3.2.3",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "lucide-react": "^0.477.0",

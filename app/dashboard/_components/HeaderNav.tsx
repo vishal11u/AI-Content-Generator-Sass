@@ -4,8 +4,8 @@ import React from "react";
 
 function HeaderNav() {
   return (
-    <div className="py-3 px-5 shadow-sm border-b-2 flex justify-between items-center">
-      <div className="flex items-center gap-2 p-2 rounded-md  border max-w-lg">
+    <div className="py-3 px-5 shadow-sm bg-white border-b-2 flex justify-between items-center">
+      <div className="flex items-center gap-2 bg-white p-2 rounded-md  border max-w-lg">
         <Search />
         <input type="text" placeholder="Search..." className="outline-none " />
       </div>

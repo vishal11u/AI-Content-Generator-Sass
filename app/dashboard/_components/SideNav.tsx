@@ -15,7 +15,7 @@ function SideNav() {
   const pathname = usePathname();
 
   return (
-    <div className="h-screen shadow border p-5">
+    <div className="h-screen shadow border bg-white p-5">
       <div className="flex justify-center border-b pb-6">
         <Image src={"/logo.svg"} alt="logo" height={100} width={100} />
       </div>
