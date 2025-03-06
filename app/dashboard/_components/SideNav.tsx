@@ -3,6 +3,7 @@ import { usePathname } from "next/navigation";
 import { FileClock, Home, Settings, WalletCards } from "lucide-react";
 import Image from "next/image";
 import React from "react";
+import Link from "next/link";
 
 const MenuList = [
   { name: "Home", icon: <Home />, path: "/dashboard" },
@@ -25,18 +26,19 @@ function SideNav() {
           const isActive = pathname === list.path;
 
           return (
-            <div
-              key={i}
-              className={`flex gap-2 mb-2 p-3 rounded-lg cursor-pointer  items-center
+            <Link href={list?.path} key={i}>
+              <div
+                className={`flex gap-2 mb-2 p-3 rounded-lg cursor-pointer  items-center
                 ${
                   isActive
                     ? "bg-indigo-600 text-white"
                     : "hover:bg-indigo-500 hover:text-white"
                 }`}
-            >
-              {list?.icon}
-              <h2 className="text-lg">{list?.name}</h2>
-            </div>
+              >
+                {list?.icon}
+                <h2 className="text-lg">{list?.name}</h2>
+              </div>
+            </Link>
           );
         })}
       </div>

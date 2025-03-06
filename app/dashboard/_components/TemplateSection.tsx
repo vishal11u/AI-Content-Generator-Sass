@@ -6,7 +6,7 @@ import TemplateCard from "./TemplateCard";
 export interface TEMPLATE {
   name: string;
   desc: string;
-  icon: string;
+  icon: string | null;
   category: string;
   slug: string;
   aiPrompt: string;
