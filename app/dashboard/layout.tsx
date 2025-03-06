@@ -6,7 +6,7 @@ interface LayoutProps {
   children: ReactNode;
 }
 
-function Layout({ children }: LayoutProps) {
+function DashboardLayout({ children }: LayoutProps) {
   return (
     <div className="bg-slate-100 h-screen">
       <div className="md:w-64 fixed hidden md:block">
@@ -20,4 +20,4 @@ function Layout({ children }: LayoutProps) {
   );
 }
 
-export default Layout;
+export default DashboardLayout;
