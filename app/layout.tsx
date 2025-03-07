@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import "./globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
+import { AiOutputProvider } from "@/context/AiOutputContext";
 
 const poppinsFont = Poppins({
   weight: ["400", "500", "700"],
@@ -22,7 +23,7 @@ export default function RootLayout({
     <ClerkProvider>
       <html lang="en">
         <body className={`${poppinsFont.className} antialiased`}>
-          {children}
+          <AiOutputProvider>{children}</AiOutputProvider>
         </body>
       </html>
     </ClerkProvider>

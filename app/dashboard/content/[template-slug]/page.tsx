@@ -13,14 +13,16 @@ import { AIOutput } from "@/utils/Schema";
 import { db } from "@/utils/db";
 import moment from "moment";
 import { useUser } from "@clerk/nextjs";
+import { useAiOutput } from "@/context/AiOutputContext";
 
 function CreateContent() {
   const params = useParams();
+  const { aiOutpoot, setAiOutpoot } = useAiOutput();
   const [selectedTemplate, setSelectedTemplate] = useState<
     TEMPLATE | undefined
   >(undefined);
   const [loading, setLoading] = useState<boolean>(false);
-  const [aiOutpoot, setAiOutpoot] = useState<string>("");
+
   const { user } = useUser();
 
   useEffect(() => {

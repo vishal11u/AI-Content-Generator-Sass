@@ -4,6 +4,7 @@ import { FileClock, Home, Settings, WalletCards } from "lucide-react";
 import Image from "next/image";
 import React from "react";
 import Link from "next/link";
+import UsageTrack from "./UsageTrack";
 
 const MenuList = [
   { name: "Home", icon: <Home />, path: "/dashboard" },
@@ -16,7 +17,7 @@ function SideNav() {
   const pathname = usePathname();
 
   return (
-    <div className="h-screen shadow border bg-white p-5">
+    <div className="h-screen relative shadow border bg-white p-5">
       <div className="flex justify-center border-b pb-6">
         <Image src={"/logo.svg"} alt="logo" height={100} width={100} />
       </div>
@@ -41,6 +42,9 @@ function SideNav() {
             </Link>
           );
         })}
+      </div>
+      <div className="absolute bottom-10 left-0 w-full">
+        <UsageTrack />
       </div>
     </div>
   );
