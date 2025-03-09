@@ -1,42 +1,63 @@
 "use client";
 import { Button } from "@/components/ui/button";
+import { useActive } from "@/context/ActiveContext";
 import { useAiOutput } from "@/context/AiOutputContext";
+import { useSubscription } from "@/context/SubscriptionContext";
 import { db } from "@/utils/db";
-import { AIOutput } from "@/utils/Schema";
+import { AIOutput, UserSubscription } from "@/utils/Schema";
 import { useUser } from "@clerk/nextjs";
 import { eq } from "drizzle-orm";
 import React, { useEffect, useState } from "react";
 
-const CREDIT_LIMIT = "10,000";
-
 function UsageTrack() {
   const { user } = useUser();
   const { aiOutpoot } = useAiOutput();
+  const { isActive } = useActive();
+  const { isSubscribed, setIsSubscribed } = useSubscription();
   const [totalUsage, setTotalUsage] = useState<number>(0);
 
+  const CREDIT_LIMIT = isSubscribed ? 100000 : 10000;
+
   const fetchData = async () => {
-    if (user?.primaryEmailAddress?.emailAddress) {
+    if (!user?.primaryEmailAddress?.emailAddress) return;
+
+    try {
       const result = await db
         .select()
         .from(AIOutput)
-        .where(eq(AIOutput.createdBy, user?.primaryEmailAddress?.emailAddress));
+        .where(eq(AIOutput.createdBy, user.primaryEmailAddress.emailAddress));
 
-      if (result) {
-        let total = 0;
-        result.forEach((element) => {
-          total += Number(element.aiResponse?.length);
-        });
-
-        setTotalUsage(
-          total > Number(CREDIT_LIMIT) ? Number(CREDIT_LIMIT) : total
+      if (result.length > 0) {
+        const total = result.reduce(
+          (acc, item) => acc + (item.aiResponse?.length || 0),
+          0
         );
+        setTotalUsage(Math.min(total, CREDIT_LIMIT));
       }
+    } catch (error) {
+      console.error("Error fetching AI output usage:", error);
+    }
+  };
+
+  const checkUserSubscription = async () => {
+    if (!user?.primaryEmailAddress?.emailAddress) return;
+
+    try {
+      const result = await db
+        .select()
+        .from(UserSubscription)
+        .where(eq(UserSubscription.email, user.primaryEmailAddress.emailAddress));
+
+      setIsSubscribed(result.length > 0);
+    } catch (error) {
+      console.error("Error checking user subscription:", error);
     }
   };
 
   useEffect(() => {
     fetchData();
-  }, [user, aiOutpoot]);
+    checkUserSubscription();
+  }, [user, aiOutpoot, isActive]);
 
   return (
     <div className="mt-5">
@@ -46,23 +67,22 @@ function UsageTrack() {
           <div
             className="h-2 bg-white rounded-full"
             style={{
-              width: `${Math.min(
-                (totalUsage / Number(CREDIT_LIMIT)) * 100,
-                100
-              )}%`,
+              width: `${(totalUsage / CREDIT_LIMIT) * 100}%`,
             }}
           ></div>
         </div>
         <h2 className="text-sm my-1">
-          {totalUsage}/{CREDIT_LIMIT} Credits Used
+          {totalUsage}/{CREDIT_LIMIT.toLocaleString()} Credits Used
         </h2>
       </div>
-      <Button
-        variant="secondary"
-        className="w-full text-indigo-500 my-3 cursor-pointer py-1"
-      >
-        Upgrade
-      </Button>
+      {!isSubscribed && (
+        <Button
+          variant="secondary"
+          className="w-full text-indigo-500 my-3 cursor-pointer py-1"
+        >
+          Upgrade
+        </Button>
+      )}
     </div>
   );
 }

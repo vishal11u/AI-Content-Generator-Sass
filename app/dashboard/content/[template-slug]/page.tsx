@@ -14,10 +14,12 @@ import { db } from "@/utils/db";
 import moment from "moment";
 import { useUser } from "@clerk/nextjs";
 import { useAiOutput } from "@/context/AiOutputContext";
+import { useActive } from "@/context/ActiveContext";
 
 function CreateContent() {
   const params = useParams();
   const { aiOutpoot, setAiOutpoot } = useAiOutput();
+  const { setIsActive } = useActive();
   const [selectedTemplate, setSelectedTemplate] = useState<
     TEMPLATE | undefined
   >(undefined);
@@ -47,6 +49,7 @@ function CreateContent() {
     try {
       const result = await chatSession.sendMessage(FinalAIPrompt);
       setAiOutpoot(result.response.text());
+      setIsActive(true);
       await SaveInDb(
         JSON.stringify(formData),
         selectedTemplate?.slug,
