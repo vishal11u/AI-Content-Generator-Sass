@@ -12,7 +12,7 @@ function DashboardLayout({ children }: LayoutProps) {
       <div className="md:block md:w-64 md:sticky md:top-0 h-screen">
         <SideNav />
       </div>
-      <div className="md:ml-64 flex-1">
+      <div className="flex-1">
         <HeaderNav />
         {children}
       </div>
