@@ -17,4 +17,3 @@ export const UserSubscription = pgTable("userSubscription", {
   paymentId: varchar("paymentId", { length: 255 }),
   joinDate: varchar("joinDate", { length: 255 }),
 });
-

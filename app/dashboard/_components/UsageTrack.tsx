@@ -7,9 +7,11 @@ import { db } from "@/utils/db";
 import { AIOutput, UserSubscription } from "@/utils/Schema";
 import { useUser } from "@clerk/nextjs";
 import { eq } from "drizzle-orm";
+import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
 function UsageTrack() {
+  const router = useRouter();
   const { user } = useUser();
   const { aiOutpoot } = useAiOutput();
   const { isActive } = useActive();
@@ -46,7 +48,9 @@ function UsageTrack() {
       const result = await db
         .select()
         .from(UserSubscription)
-        .where(eq(UserSubscription.email, user.primaryEmailAddress.emailAddress));
+        .where(
+          eq(UserSubscription.email, user.primaryEmailAddress.emailAddress)
+        );
 
       setIsSubscribed(result.length > 0);
     } catch (error) {
@@ -77,6 +81,7 @@ function UsageTrack() {
       </div>
       {!isSubscribed && (
         <Button
+          onClick={() => router.push("/dashboard/billing")}
           variant="secondary"
           className="w-full text-indigo-500 my-3 cursor-pointer py-1"
         >
