@@ -5,7 +5,7 @@ const nextConfig: NextConfig = {
   images: {
     domains: ["cdn-icons-png.flaticon.com"],
   },
-  reactStrictMode: true,
+  reactStrictMode: false,
   async rewrites() {
     return [
       {
