@@ -28,7 +28,12 @@ function SideNav() {
 
       <div className="h-screen hidden md:block w-64 bg-white shadow border p-5 fixed">
         <div className="flex justify-center border-b pb-6">
-          <Image src={"/logo.svg"} alt="logo" height={100} width={100} />
+          <a
+            href="/"
+            className="text-xl font-bold text-indigo-600 cursor-pointer"
+          >
+            AI ContentGen
+          </a>
         </div>
 
         <div className="mt-5">
@@ -75,7 +80,12 @@ function SideNav() {
         </button>
 
         <div className="flex justify-center border-b pb-6">
-          <Image src={"/logo.svg"} alt="logo" height={100} width={100} />
+          <a
+            href="/"
+            className="text-xl font-bold text-indigo-600 cursor-pointer"
+          >
+            AI ContentGen
+          </a>
         </div>
 
         <div className="mt-5">
