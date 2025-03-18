@@ -1,80 +1,12 @@
 "use client";
-import React, { useEffect, useState } from "react";
-import axios from "axios";
-import { Loader2 } from "lucide-react";
-import { useUser } from "@clerk/nextjs";
-import { db } from "@/utils/db";
-import moment from "moment";
-import { UserSubscription } from "@/utils/Schema";
-import { useSubscription } from "@/context/SubscriptionContext";
+import { useRouter } from "next/navigation";
+import React from "react";
 
-const SubscriptionPage: React.FC = () => {
-  const [loading, setLoading] = useState(false);
-  const { user } = useUser();
-  const { isSubscribed } = useSubscription();
-
-  const CreateSubscription = async () => {
-    setLoading(true);
-    try {
-      const resp = await axios.post("/api/create-subscriptions", {});
-      OnPayment(resp.data.id);
-    } catch (error) {
-      console.error("Error creating subscription:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const OnPayment = (subId: string) => {
-    const options = {
-      key: process.env.NEXT_PUBLIC_RAZORPAY_ID,
-      subscription_id: subId,
-      name: "AI-Content-Generator",
-      description: "Monthly Subscription",
-      handler: async (resp: any) => {
-        if (resp) {
-          SaveSubscription(resp.razorpay_payment_id);
-        }
-      },
-    };
-
-    if (typeof window !== "undefined") {
-      const rzp = new (window as any).Razorpay(options);
-      rzp.open();
-    } else {
-      console.error("Razorpay is not available");
-    }
-  };
-
-  useEffect(() => {
-    const script = document.createElement("script");
-    script.src = "https://checkout.razorpay.com/v1/checkout.js";
-    script.async = true;
-    document.body.appendChild(script);
-  }, []);
-
-  const SaveSubscription = async (paymentId: string) => {
-    try {
-      const result = await db.insert(UserSubscription).values({
-        email: user?.primaryEmailAddress?.emailAddress,
-        userName: user?.fullName,
-        active: true,
-        paymentId: paymentId,
-        joinDate: moment().format("DD/MM/yyyy"),
-      });
-
-      if (result) {
-        window.location.reload();
-      }
-      return result;
-    } catch (error) {
-      console.error("Error saving subscription:", error);
-      throw error;
-    }
-  };
+const BillingPage: React.FC = () => {
+  const router = useRouter();
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-auto bg-gray-100 p-4 sm:p-6 md:p-8">
+    <div className="flex flex-col items-center justify-center min-h-screen text-gray-700 bg-gray-100 p-4 sm:p-6 md:p-8">
       <div className="text-center mb-6 md:mb-10">
         <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold">
           Upgrade With Monthly Plan
@@ -89,7 +21,7 @@ const SubscriptionPage: React.FC = () => {
               Free
             </div>
           </div>
-          <div className="text-center mb-4 sm:mb-6">
+          <div className="text-center mb-4 sm:mb-6 text-gray-700">
             <div className="mt-2 flex items-center justify-center">
               <span className="text-3xl sm:text-4xl md:text-5xl font-bold">
                 0$
@@ -138,28 +70,12 @@ const SubscriptionPage: React.FC = () => {
             <Feature text="1 Year of History" />
           </div>
 
-          <button
-            onClick={CreateSubscription}
-            disabled={loading || isSubscribed}
-            className={`mt-6 sm:mt-8 w-full py-2 sm:py-3 px-4 sm:px-6 rounded-md font-medium flex items-center justify-center text-sm sm:text-base transition-colors
-        ${
-          isSubscribed
-            ? "bg-gray-600 text-white cursor-not-allowed"
-            : "bg-white border border-blue-500 text-blue-500 hover:bg-blue-50"
-        }
-    `}
+          <a
+            href="/dashboard"
+            className={`mt-6 sm:mt-8 w-full py-2 sm:py-3 px-4 sm:px-6 rounded-md font-medium flex items-center justify-center text-sm sm:text-base transition-colors bg-white border border-blue-500 text-blue-500 hover:bg-blue-50`}
           >
-            {isSubscribed ? (
-              "Currently Active Plan"
-            ) : loading ? (
-              <>
-                <Loader2 className="animate-spin h-5 w-5 text-white mr-2" />
-                Processing...
-              </>
-            ) : (
-              "Get Started"
-            )}
-          </button>
+            Get Started
+          </a>
         </div>
       </div>
     </div>
@@ -185,4 +101,4 @@ const Feature: React.FC<{ text: string }> = ({ text }) => (
   </div>
 );
 
-export default SubscriptionPage;
+export default BillingPage;

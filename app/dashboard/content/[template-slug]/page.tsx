@@ -2,7 +2,6 @@
 import React, { useState, useEffect } from "react";
 import FormSection from "../_components/FormSection";
 import OutPutSection from "../_components/OutPutSection";
-import { TEMPLATE } from "../../_components/TemplateSection";
 import Templates from "@/app/(data)/Templates";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
@@ -15,6 +14,7 @@ import moment from "moment";
 import { useUser } from "@clerk/nextjs";
 import { useAiOutput } from "@/context/AiOutputContext";
 import { useActive } from "@/context/ActiveContext";
+import { TEMPLATE } from "@/types/main-types";
 
 function CreateContent() {
   const params = useParams();
@@ -80,7 +80,7 @@ function CreateContent() {
   };
 
   return (
-    <div className="p-10">
+    <div className="p-3 md:p-10">
       <Link href="/dashboard">
         <Button variant="ghost" className="cursor-pointer">
           <ArrowLeft /> Go Back

@@ -1,7 +1,7 @@
 import React from "react";
-import { TEMPLATE } from "./TemplateSection";
 import Image from "next/image";
 import Link from "next/link";
+import { TEMPLATE } from "@/types/main-types";
 
 function TemplateCard(data: TEMPLATE) {
   return (

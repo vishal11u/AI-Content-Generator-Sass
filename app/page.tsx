@@ -1,100 +1,129 @@
 "use client";
-import React, { useState } from "react";
-import { Menu, X } from "lucide-react";
-import { useRouter } from "next/navigation";
+import Footer from "@/components/Footer";
+import Navbar from "@/components/Navbar";
+import FeaturesPage from "./features/page";
+import BillingPage from "@/components/BillingPage";
+import { motion } from "framer-motion";
+import { useEffect, useRef } from "react";
+import gsap from "gsap";
 
 const LandingPage = () => {
-  const [menuOpen, setMenuOpen] = useState(false);
-  const router = useRouter()
+  const waveRefs = useRef([]);
+
+  useEffect(() => {
+    if (waveRefs.current.length) {
+      const tl = gsap.timeline({ repeat: -1, yoyo: true });
+      waveRefs.current.forEach((wave, index) => {
+        tl.to(
+          wave,
+          {
+            x: index % 2 === 0 ? 30 : -30,
+            y: index % 2 === 0 ? 10 : -10,
+            duration: 4 + index * 0.2,
+            ease: "sine.inOut",
+          },
+          "-=3.5"
+        );
+      });
+    }
+  }, []);
 
   return (
-    <div className="w-full min-h-screen bg-gray-50 text-gray-900">
-      {/* Navbar */}
-      <nav className="fixed top-0 w-full bg-white shadow-md z-50 flex items-center justify-between px-6 py-4">
-        <div className="text-2xl font-bold text-indigo-600">AI ContentGen</div>
-        <div className="hidden md:flex space-x-6">
-          <a href="#features" className="hover:text-indigo-600">Features</a>
-          <a href="#pricing" className="hover:text-indigo-600">Pricing</a>
-          <a href="#about" className="hover:text-indigo-600">About</a>
-          <a href="#contact" className="hover:text-indigo-600">Contact</a>
-          <button onClick={() => router.push("/dashboard")} className="px-6 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700">
-            Get Started
-          </button>
+    <div className="w-full min-h-screen bg-black text-gray-200 relative overflow-hidden">
+      <Navbar />
+      <section className="relative w-full h-screen flex flex-col items-center justify-center text-center overflow-hidden bg-black text-gray-200">
+        <div className="absolute inset-0 pointer-events-none">
+          <svg className="absolute w-full h-full" viewBox="0 0 1440 800">
+            <defs>
+              <linearGradient
+                id="rainbowGradient"
+                x1="0%"
+                y1="0%"
+                x2="100%"
+                y2="0%"
+              >
+                <stop offset="0%" stopColor="#ff0000" />
+                <stop offset="16%" stopColor="#ff7f00" />
+                <stop offset="33%" stopColor="#ffff00" />
+                <stop offset="50%" stopColor="#00ff00" />
+                <stop offset="66%" stopColor="#0000ff" />
+                <stop offset="83%" stopColor="#4b0082" />
+                <stop offset="100%" stopColor="#9400d3" />
+              </linearGradient>
+            </defs>
+            {[...Array(9)].map((_, i) => (
+              <path
+                key={i}
+                ref={(el) => (waveRefs.current[i] = el )}
+                fill="none"
+                stroke="url(#rainbowGradient)"
+                strokeWidth={1.5 + i * 0.3}
+                opacity={0.3 + i * 0.05}
+                d={`M0,${600 - i * 20} Q180,${450 - i * 20} 360,${
+                  600 - i * 20
+                } T720,${600 - i * 20} T1080,${600 - i * 20} T1440,${
+                  600 - i * 20
+                }`}
+              />
+            ))}
+          </svg>
         </div>
-        <button className="md:hidden" onClick={() => setMenuOpen(!menuOpen)}>
-          {menuOpen ? <X size={24} /> : <Menu size={24} />}
-        </button>
-      </nav>
-
-      {/* Mobile Menu */}
-      {menuOpen && (
-        <div className="fixed inset-0 bg-white z-40 flex flex-col items-center space-y-6 pt-20">
-          <a href="#features" className="hover:text-indigo-600">Features</a>
-          <a href="#pricing" className="hover:text-indigo-600">Pricing</a>
-          <a href="#about" className="hover:text-indigo-600">About</a>
-          <a href="#contact" className="hover:text-indigo-600">Contact</a>
-          <button className="px-6 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700">
-            Get Started
-          </button>
-        </div>
-      )}
-
-      {/* Hero Section */}
-      <section className="relative h-screen flex flex-col items-center justify-center text-center px-6 bg-gradient-to-r from-blue-600 to-indigo-700 text-white">
-        <h1 className="text-6xl font-bold">AI-Powered Content Creation</h1>
-        <p className="text-xl mt-4 max-w-2xl">Generate high-quality blog posts, ads, and copy in seconds.</p>
-        <button className="mt-6 px-8 py-4 bg-white text-blue-600 rounded-lg shadow-lg hover:bg-gray-200 transition-transform transform hover:scale-105">
-          Start Creating
-        </button>
+        <motion.div
+          className="relative z-10 max-w-3xl mx-auto px-6"
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1 }}
+        >
+          <h1 className="text-6xl font-bold text-white tracking-wide neon-text">
+            AI-Powered Content Generation
+          </h1>
+          <p className="text-xl mt-4 text-gray-300">
+            Generate high-quality blog posts, ads, and copy in seconds.
+          </p>
+          <motion.button
+            whileHover={{ scale: 1.1 }}
+            className="mt-6 px-8 py-4 bg-gradient-to-r from-blue-500 to-purple-500 text-white rounded-full shadow-xl hover:shadow-neon transition-all"
+          >
+            Start Creating
+          </motion.button>
+        </motion.div>
       </section>
-
-      {/* Features Section */}
-      <section id="features" className="py-16 px-6 text-center bg-white">
-        <h2 className="text-4xl font-bold">Why Use AI ContentGen?</h2>
+      <section
+        id="features"
+        className="relative py-16 px-6 text-center bg-transparent overflow-hidden"
+      >
+        <h2 className="text-4xl font-bold neon-text">Why Use AI ContentGen?</h2>
         <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-8">
-          <div className="p-6 bg-gray-100 rounded-lg shadow-lg">
-            <h3 className="text-xl font-semibold">AI-Driven Creativity</h3>
-            <p className="mt-2">Instantly generate fresh, engaging content.</p>
-          </div>
-          <div className="p-6 bg-gray-100 rounded-lg shadow-lg">
-            <h3 className="text-xl font-semibold">SEO Optimized</h3>
-            <p className="mt-2">AI ensures high-ranking, keyword-rich content.</p>
-          </div>
-          <div className="p-6 bg-gray-100 rounded-lg shadow-lg">
-            <h3 className="text-xl font-semibold">Time-Saving</h3>
-            <p className="mt-2">Create content 10x faster than traditional methods.</p>
-          </div>
+          {[
+            {
+              title: "AI-Driven Creativity",
+              desc: "Generate engaging content instantly.",
+            },
+            {
+              title: "SEO Optimized",
+              desc: "High-ranking, keyword-rich content.",
+            },
+            {
+              title: "Time-Saving",
+              desc: "Create content 10x faster than before.",
+            },
+          ].map((feature, index) => (
+            <motion.div
+              key={index}
+              className="p-6 bg-gray-900 text-white rounded-lg shadow-xl neon-border"
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: index * 0.2 }}
+            >
+              <h3 className="text-xl font-semibold">{feature.title}</h3>
+              <p className="mt-2">{feature.desc}</p>
+            </motion.div>
+          ))}
         </div>
       </section>
-
-      {/* Pricing Section */}
-      <section id="pricing" className="py-16 px-6 bg-gray-200 text-center">
-        <h2 className="text-4xl font-bold">Choose Your Plan</h2>
-        <div className="mt-6 flex flex-wrap justify-center gap-6">
-          <div className="bg-white p-8 rounded-lg shadow-md">
-            <h3 className="text-2xl font-semibold">Basic</h3>
-            <p className="mt-2 text-lg">Free</p>
-          </div>
-          <div className="bg-white p-8 rounded-lg shadow-md">
-            <h3 className="text-2xl font-semibold">Pro</h3>
-            <p className="mt-2 text-lg">$9.99/month</p>
-          </div>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="py-16 text-center bg-gradient-to-r from-indigo-600 to-purple-700 text-white">
-        <h2 className="text-4xl font-bold">Start Creating Now</h2>
-        <p className="mt-4 text-lg">Join thousands of creators using AI for content generation.</p>
-        <button className="mt-6 px-8 py-4 bg-white text-indigo-600 rounded-lg shadow-lg hover:bg-gray-200">
-          Try for Free
-        </button>
-      </section>
-
-      {/* Footer */}
-      <footer className="py-6 bg-gray-900 text-white text-center">
-        <p>&copy; 2024 AI ContentGen. All rights reserved.</p>
-      </footer>
+      <BillingPage />
+      <FeaturesPage />
+      <Footer />
     </div>
   );
 };
