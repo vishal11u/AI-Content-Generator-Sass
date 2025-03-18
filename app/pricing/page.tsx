@@ -1,10 +1,10 @@
 import React from "react";
-import SubscriptionPage from "../dashboard/billing/page";
+import BillingPage from "@/components/BillingPage";
 
 function PricingPAge() {
   return (
     <div>
-      <SubscriptionPage />
+      <BillingPage />
     </div>
   );
 }

@@ -1,22 +1,20 @@
 "use client";
-import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { Menu, X } from "lucide-react";
 
 function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
-  const router = useRouter();
 
   return (
     <div className="w-full bg-gray-50 text-gray-900">
-      <nav className="fixed top-0 w-full bg-white shadow-md z-50 flex items-center justify-between px-6 py-4">
+      <nav className="fixed top-0 w-full bg-white shadow-md z-50 flex items-center justify-between px-10 py-4">
         <a
           href="/"
           className="text-2xl font-bold text-indigo-600 cursor-pointer"
         >
           AI ContentGen
         </a>
-        <div className="hidden md:flex space-x-6">
+        <div className="hidden md:flex items-center space-x-6">
           <a href="/features" className="hover:text-indigo-600 cursor-pointer">
             Features
           </a>
@@ -29,12 +27,12 @@ function Navbar() {
           <a href="/contactus" className="hover:text-indigo-600 cursor-pointer">
             Contact
           </a>
-          <button
-            onClick={() => router.push("/dashboard")}
+          <a
+            href="/dashboard"
             className="px-6 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 cursor-pointer"
           >
             Get Started
-          </button>
+          </a>
         </div>
         <button className="md:hidden" onClick={() => setMenuOpen(!menuOpen)}>
           {menuOpen ? <X size={24} /> : <Menu size={24} />}
@@ -55,12 +53,12 @@ function Navbar() {
           <a href="/contactus" className="hover:text-indigo-600 cursor-pointer">
             Contact
           </a>
-          <button
-            onClick={() => router.push("/dashboard")}
+          <a
+            href="/dashboard"
             className="px-6 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 cursor-pointer"
           >
             Get Started
-          </button>
+          </a>
         </div>
       )}
     </div>

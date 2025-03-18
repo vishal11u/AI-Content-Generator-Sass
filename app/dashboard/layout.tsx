@@ -38,7 +38,7 @@ function DashboardLayout({ children }: LayoutProps) {
       <div className="flex-1 flex flex-col">
         <HeaderNav />
 
-        <main className="p-6 overflow-y-auto">{children}</main>
+        <main className="overflow-y-auto">{children}</main>
       </div>
     </div>
   );

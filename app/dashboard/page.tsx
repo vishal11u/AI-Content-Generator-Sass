@@ -7,7 +7,7 @@ function Dashboard() {
   const [userSearchInput, setUserSearchInput] = useState<string>("");
 
   return (
-    <div>
+    <div className="w-full border">
       {/* Search Section */}
       <SearchSection
         onSearchInput={(value: string) => setUserSearchInput(value)}

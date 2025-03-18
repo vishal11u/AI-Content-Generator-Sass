@@ -1,7 +1,7 @@
 import React from "react";
 import Templates from "@/app/(data)/Templates";
-import { TEMPLATE } from "../dashboard/_components/TemplateSection";
-import Image from "next/image";
+ import Image from "next/image";
+import { TEMPLATE } from "@/types/main-types";
 
 function FeaturesPage() {
   return (

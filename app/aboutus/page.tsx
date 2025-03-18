@@ -3,7 +3,6 @@ import React from "react";
 const AboutUs = () => {
   return (
     <main className="bg-gray-100 min-h-screen">
-      {/* Hero Section */}
       <section
         className="relative w-full h-[500px] bg-cover bg-center flex items-center justify-center text-white text-center"
         style={{
@@ -17,9 +16,7 @@ const AboutUs = () => {
         </div>
       </section>
 
-      {/* About Me - ZigZag Layout */}
       <section className="max-w-6xl mx-auto px-6 py-16 grid md:grid-cols-2 gap-12 items-center">
-        {/* Profile Image */}
         <div className="flex justify-center">
           <img
             src="https://cdn140.picsart.com/45456389314876384666.png?type=webp&r=640&to=min"
@@ -28,7 +25,6 @@ const AboutUs = () => {
           />
         </div>
 
-        {/* About Text */}
         <div className="text-center md:text-left">
           <h2 className="text-3xl font-bold text-gray-800">
             I'm Vishal Shitole
@@ -42,10 +38,8 @@ const AboutUs = () => {
         </div>
       </section>
 
-      {/* YouTube Video - ZigZag Layout */}
       <section className="bg-white py-16">
         <div className="max-w-6xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
-          {/* Video Description */}
           <div className="text-center md:text-left">
             <h2 className="text-3xl font-bold text-gray-800">
               Watch Me in Action
@@ -55,7 +49,6 @@ const AboutUs = () => {
             </p>
           </div>
 
-          {/* Video Embed */}
           <div className="relative w-full aspect-w-16 aspect-h-9">
             <iframe
               className="w-full h-60 md:h-80 rounded-lg shadow-lg"
@@ -68,7 +61,6 @@ const AboutUs = () => {
         </div>
       </section>
 
-      {/* Call-to-Action Section */}
       <section className="bg-gradient-to-r from-blue-500 to-purple-600 text-white py-12 text-center">
         <div className="max-w-4xl mx-auto px-6">
           <h2 className="text-3xl font-bold">Let's Build Something Amazing</h2>

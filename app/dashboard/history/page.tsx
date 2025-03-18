@@ -4,15 +4,7 @@ import Image from "next/image";
 import { db } from "@/utils/db";
 import Templates from "@/app/(data)/Templates";
 import { AIOutput } from "@/utils/Schema";
-import { TEMPLATE } from "../_components/TemplateSection";
-
-interface HistoryItem {
-  id: number;
-  templateSlug: string;
-  aiResp: string;
-  date: string;
-  words: number;
-}
+import { HistoryItem, TEMPLATE } from "@/types/main-types";
 
 export default function HistoryPage() {
   const [historyData, setHistoryData] = useState<HistoryItem[]>([]);
@@ -49,7 +41,6 @@ export default function HistoryPage() {
     return template?.icon || "";
   };
 
-  // Pagination logic
   const totalPages = Math.ceil(historyData.length / itemsPerPage);
   const paginatedData = historyData.slice(
     (currentPage - 1) * itemsPerPage,
