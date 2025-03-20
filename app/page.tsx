@@ -112,7 +112,7 @@ const LandingPage = () => {
             whileHover={{ scale: 1.1 }}
             className="mt-6 px-8 py-4 bg-gradient-to-r from-blue-500 to-purple-500 text-white rounded-full shadow-xl hover:shadow-neon transition-all"
           >
-            Start Creating
+            <a href="/dashboard">Start Creating</a>
           </motion.button>
         </motion.div>
       </motion.section>
