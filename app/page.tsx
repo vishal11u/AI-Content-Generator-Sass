@@ -1,38 +1,63 @@
 "use client";
-import Footer from "@/components/Footer";
-import Navbar from "@/components/Navbar";
-import FeaturesPage from "./features/page";
-import BillingPage from "@/components/BillingPage";
-import { motion } from "framer-motion";
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
+import { motion, useScroll, useTransform } from "framer-motion";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
+import FeaturesPage from "./features/page";
+import BillingPage from "@/components/BillingPage";
 
 const LandingPage = () => {
-  const waveRefs = useRef([]);
+  const waveRefs = useRef<SVGPathElement[]>([]);
+  const { scrollYProgress } = useScroll();
+
+  const heroScale = useTransform(scrollYProgress, [0, 0.3], [1, 1.7]);
+  const heroOpacity = useTransform(scrollYProgress, [0, 0.3], [1, 0.7]);
 
   useEffect(() => {
     if (waveRefs.current.length) {
       const tl = gsap.timeline({ repeat: -1, yoyo: true });
+
       waveRefs.current.forEach((wave, index) => {
         tl.to(
           wave,
           {
-            x: index % 2 === 0 ? 30 : -30,
-            y: index % 2 === 0 ? 10 : -10,
-            duration: 4 + index * 0.2,
+            x: index % 2 === 0 ? 60 : -60,
+            y: index % 2 === 0 ? 25 : -25,
+            duration: 2 + index * 0.1,
             ease: "sine.inOut",
           },
-          "-=3.5"
+          "-=1.8"
         );
       });
     }
+
+    gsap.fromTo(
+      ".animated-section",
+      { opacity: 0, y: 50 },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 1.2,
+        stagger: 0.3,
+        ease: "easeOut",
+        scrollTrigger: {
+          trigger: ".animated-section",
+          start: "top 80%",
+          toggleActions: "play none none reverse",
+        },
+      }
+    );
   }, []);
 
   return (
     <div className="w-full min-h-screen bg-black text-gray-200 relative overflow-hidden">
       <Navbar />
-      <section className="relative w-full h-screen flex flex-col items-center justify-center text-center overflow-hidden bg-black text-gray-200">
-        <div className="absolute inset-0 pointer-events-none">
+      <motion.section
+        style={{ scale: heroScale, opacity: heroOpacity }}
+        className="relative w-full h-screen flex flex-col items-center justify-center text-center overflow-hidden bg-black text-gray-200"
+      >
+        <div className="absolute inset-0 pointer-events-none -mt-56">
           <svg className="absolute w-full h-full" viewBox="0 0 1440 800">
             <defs>
               <linearGradient
@@ -54,7 +79,9 @@ const LandingPage = () => {
             {[...Array(9)].map((_, i) => (
               <path
                 key={i}
-                ref={(el) => (waveRefs.current[i] = el )}
+                ref={(el) => {
+                  if (el) waveRefs.current[i] = el;
+                }}
                 fill="none"
                 stroke="url(#rainbowGradient)"
                 strokeWidth={1.5 + i * 0.3}
@@ -68,6 +95,7 @@ const LandingPage = () => {
             ))}
           </svg>
         </div>
+
         <motion.div
           className="relative z-10 max-w-3xl mx-auto px-6"
           initial={{ opacity: 0, y: 50 }}
@@ -87,12 +115,21 @@ const LandingPage = () => {
             Start Creating
           </motion.button>
         </motion.div>
-      </section>
+      </motion.section>
+
       <section
         id="features"
-        className="relative py-16 px-6 text-center bg-transparent overflow-hidden"
+        className="relative py-16 px-6 text-center bg-transparent overflow-hidden animated-section"
       >
-        <h2 className="text-4xl font-bold neon-text">Why Use AI ContentGen?</h2>
+        <motion.h2
+          className="text-4xl font-bold neon-text"
+          initial={{ opacity: 0, y: -30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1 }}
+        >
+          Why Use AI ContentGen?
+        </motion.h2>
+
         <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-8">
           {[
             {
@@ -112,7 +149,7 @@ const LandingPage = () => {
               key={index}
               className="p-6 bg-gray-900 text-white rounded-lg shadow-xl neon-border"
               initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
+              whileInView={{ opacity: 1, scale: 1 }}
               transition={{ delay: index * 0.2 }}
             >
               <h3 className="text-xl font-semibold">{feature.title}</h3>
@@ -121,8 +158,25 @@ const LandingPage = () => {
           ))}
         </div>
       </section>
-      <BillingPage />
-      <FeaturesPage />
+
+      <motion.section
+        className="relative overflow-hidden animated-section"
+        initial={{ opacity: 0, x: -50 }}
+        whileInView={{ opacity: 1, x: 0 }}
+        transition={{ duration: 1.2 }}
+      >
+        <BillingPage />
+      </motion.section>
+
+      <motion.section
+        className="relative overflow-hidden animated-section"
+        initial={{ opacity: 0, x: 50 }}
+        whileInView={{ opacity: 1, x: 0 }}
+        transition={{ duration: 1.2 }}
+      >
+        <FeaturesPage />
+      </motion.section>
+
       <Footer />
     </div>
   );
