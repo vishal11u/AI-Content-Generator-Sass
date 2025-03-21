@@ -7,7 +7,7 @@ function Navbar() {
 
   return (
     <div className="w-full bg-gray-50 text-gray-900">
-      <nav className="fixed top-0 w-full bg-white shadow-md z-50 flex items-center justify-between px-16 py-4">
+      <nav className="fixed top-0 w-full bg-white shadow-md z-50 flex items-center justify-between px-6 md:px-16 py-4">
         <a
           href="/"
           className="text-2xl font-bold text-indigo-600 cursor-pointer"
@@ -17,25 +17,25 @@ function Navbar() {
         <div className="hidden md:flex items-center space-x-6">
           <a
             href="/features"
-            className="relative hover:text-indigo-600 cursor-pointer after:absolute after:bottom-0 after:left-0 after:w-full after:h-[2px] after:bg-indigo-600 after:scale-x-0 after:transition-transform after:duration-300 hover:after:scale-x-100"
+            className="relative font-medium hover:text-indigo-600 cursor-pointer after:absolute after:bottom-0 after:left-0 after:w-full after:h-[2px] after:bg-indigo-600 after:scale-x-0 after:transition-transform after:duration-300 hover:after:scale-x-100"
           >
             Features
           </a>
           <a
             href="/pricing"
-            className="relative hover:text-indigo-600 cursor-pointer after:absolute after:bottom-0 after:left-0 after:w-full after:h-[2px] after:bg-indigo-600 after:scale-x-0 after:transition-transform after:duration-300 hover:after:scale-x-100"
+            className="relative font-medium hover:text-indigo-600 cursor-pointer after:absolute after:bottom-0 after:left-0 after:w-full after:h-[2px] after:bg-indigo-600 after:scale-x-0 after:transition-transform after:duration-300 hover:after:scale-x-100"
           >
             Pricing
           </a>
           <a
             href="/aboutus"
-            className="relative hover:text-indigo-600 cursor-pointer after:absolute after:bottom-0 after:left-0 after:w-full after:h-[2px] after:bg-indigo-600 after:scale-x-0 after:transition-transform after:duration-300 hover:after:scale-x-100"
+            className="relative font-medium hover:text-indigo-600 cursor-pointer after:absolute after:bottom-0 after:left-0 after:w-full after:h-[2px] after:bg-indigo-600 after:scale-x-0 after:transition-transform after:duration-300 hover:after:scale-x-100"
           >
             About
           </a>
           <a
             href="/contactus"
-            className="relative hover:text-indigo-600 cursor-pointer after:absolute after:bottom-0 after:left-0 after:w-full after:h-[2px] after:bg-indigo-600 after:scale-x-0 after:transition-transform after:duration-300 hover:after:scale-x-100"
+            className="relative font-medium hover:text-indigo-600 cursor-pointer after:absolute after:bottom-0 after:left-0 after:w-full after:h-[2px] after:bg-indigo-600 after:scale-x-0 after:transition-transform after:duration-300 hover:after:scale-x-100"
           >
             Contact
           </a>
@@ -43,7 +43,7 @@ function Navbar() {
 
         <a
           href="/dashboard"
-          className="px-6 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 cursor-pointer"
+          className="px-6 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 cursor-pointer hidden md:block"
         >
           Get Dashboard
         </a>
@@ -70,7 +70,7 @@ function Navbar() {
             href="/dashboard"
             className="px-6 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 cursor-pointer"
           >
-            Get Started
+            Get Dashboard
           </a>
         </div>
       )}

@@ -1,37 +1,20 @@
 "use client";
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 import gsap from "gsap";
 import { motion, useScroll, useTransform } from "framer-motion";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import FeaturesPage from "./features/page";
 import BillingPage from "@/components/BillingPage";
+import AnimatedWaves from "@/components/AnimatedWaves";
 
 const LandingPage = () => {
-  const waveRefs = useRef<SVGPathElement[]>([]);
   const { scrollYProgress } = useScroll();
 
   const heroScale = useTransform(scrollYProgress, [0, 0.3], [1, 1.7]);
   const heroOpacity = useTransform(scrollYProgress, [0, 0.3], [1, 0.7]);
 
   useEffect(() => {
-    if (waveRefs.current.length) {
-      const tl = gsap.timeline({ repeat: -1, yoyo: true });
-
-      waveRefs.current.forEach((wave, index) => {
-        tl.to(
-          wave,
-          {
-            x: index % 2 === 0 ? 60 : -60,
-            y: index % 2 === 0 ? 25 : -25,
-            duration: 2 + index * 0.1,
-            ease: "sine.inOut",
-          },
-          "-=1.8"
-        );
-      });
-    }
-
     gsap.fromTo(
       ".animated-section",
       { opacity: 0, y: 50 },
@@ -57,43 +40,8 @@ const LandingPage = () => {
         style={{ scale: heroScale, opacity: heroOpacity }}
         className="relative w-full h-screen flex flex-col items-center justify-center text-center overflow-hidden bg-black text-gray-200"
       >
-        <div className="absolute inset-0 pointer-events-none -mt-56">
-          <svg className="absolute w-full h-full" viewBox="0 0 1440 800">
-            <defs>
-              <linearGradient
-                id="rainbowGradient"
-                x1="0%"
-                y1="0%"
-                x2="100%"
-                y2="0%"
-              >
-                <stop offset="0%" stopColor="#ff0000" />
-                <stop offset="16%" stopColor="#ff7f00" />
-                <stop offset="33%" stopColor="#ffff00" />
-                <stop offset="50%" stopColor="#00ff00" />
-                <stop offset="66%" stopColor="#0000ff" />
-                <stop offset="83%" stopColor="#4b0082" />
-                <stop offset="100%" stopColor="#9400d3" />
-              </linearGradient>
-            </defs>
-            {[...Array(9)].map((_, i) => (
-              <path
-                key={i}
-                ref={(el) => {
-                  if (el) waveRefs.current[i] = el;
-                }}
-                fill="none"
-                stroke="url(#rainbowGradient)"
-                strokeWidth={1.5 + i * 0.3}
-                opacity={0.3 + i * 0.05}
-                d={`M0,${600 - i * 20} Q180,${450 - i * 20} 360,${
-                  600 - i * 20
-                } T720,${600 - i * 20} T1080,${600 - i * 20} T1440,${
-                  600 - i * 20
-                }`}
-              />
-            ))}
-          </svg>
+        <div className="absolute inset-0 pointer-events-none -mt-64 md:-mt-56">
+          <AnimatedWaves />
         </div>
 
         <motion.div
@@ -102,7 +50,7 @@ const LandingPage = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1 }}
         >
-          <h1 className="text-6xl font-bold text-white tracking-wide neon-text">
+          <h1 className="text-5xl md:text-6xl font-bold text-white tracking-wide neon-text">
             AI-Powered Content Generation
           </h1>
           <p className="text-xl mt-4 text-gray-300">
