@@ -40,7 +40,7 @@ const LandingPage = () => {
         style={{ scale: heroScale, opacity: heroOpacity }}
         className="relative w-full h-screen flex flex-col items-center justify-center text-center overflow-hidden bg-black text-gray-200"
       >
-        <div className="absolute inset-0 pointer-events-none -mt-64 md:-mt-56">
+        <div className="absolute inset-0 pointer-events-none -mt-64 md:-mt-0">
           <AnimatedWaves />
         </div>
 
